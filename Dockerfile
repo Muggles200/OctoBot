@@ -51,20 +51,18 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends curl \
     && mkdir -p /usr/share/keyrings \
     && chmod 0755 /usr/share/keyrings \
-    && curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | tee /usr/share/keyrings/cloudflare-main.gpg >/dev/null \ 
+    && curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | tee /usr/share/keyrings/cloudflare-main.gpg >/dev/null \
     && echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared buster main' | tee /etc/apt/sources.list.d/cloudflared.list \
-    && apt-get update \ 
+    && apt-get update \
     && apt-get install -y --no-install-recommends curl cloudflared s3fs nfs-common libxslt-dev libxcb-xinput0 libjpeg62-turbo-dev zlib1g-dev libblas-dev liblapack-dev libatlas-base-dev libopenjp2-7 libtiff-dev \
     && apt-get -y install --no-install-recommends /opt/efs/build/amazon-efs-utils*deb \
     && rm -rf /opt/efs \
     && rm -rf /var/lib/apt/lists/* \
-    && ln -s /opt/venv/bin/OctoBot OctoBot # Make sure we use the virtualenv \
+    && ln -s /opt/venv/bin/OctoBot OctoBot \
     && chmod +x docker-entrypoint.sh
 
-VOLUME /octobot/backtesting
-VOLUME /octobot/logs
-VOLUME /octobot/tentacles
-VOLUME /octobot/user
+# Removed VOLUME instructions as they are not allowed.
+# Configure Railway volumes in your Railway project settings instead.
 
 EXPOSE 5001
 
